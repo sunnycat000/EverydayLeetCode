@@ -1,0 +1,32 @@
+class Solution {
+    public int numTriplets(int[] nums1, int[] nums2) {
+        TreeMap<Long, Integer> sqr1 = new TreeMap<>();
+        TreeMap<Long, Integer> sqr2 = new TreeMap<>();
+        TreeMap<Long, Integer> mult1 = new TreeMap<>();
+        TreeMap<Long, Integer> mult2 = new TreeMap<>();
+        for (int i = 0; i < nums1.length; i++) {
+            sqr1.put(((long) nums1[i]) * ((long) nums1[i]), sqr1.get(((long)nums1[i]) * ((long)nums1[i])) == null? 1: sqr1.get(((long)nums1[i]) * ((long)nums1[i])) + 1);
+            for (int j = 0; i != j && j < nums1.length; j++) {
+                mult1.put(((long) nums1[i]) * ((long)nums1[j]), mult1.get(((long)nums1[i]) * ((long)nums1[j])) == null? 1: mult1.get(((long)nums1[i]) * ((long)nums1[j])) + 1);    
+            }
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            sqr2.put(((long) nums2[i]) * ((long)nums2[i]), sqr2.get(((long)nums2[i]) * ((long)nums2[i])) == null? 1: sqr2.get(((long)nums2[i]) * ((long)nums2[i])) + 1);
+            for (int j = 0; i != j && j < nums2.length; j++) {
+                mult2.put(((long) nums2[i]) * ((long)nums2[j]), mult2.get(((long)nums2[i]) * ((long)nums2[j])) == null? 1: mult2.get(((long)nums2[i]) * ((long)nums2[j])) + 1);    
+            }
+        }
+        System.out.println(sqr1);
+        System.out.println(sqr2);
+        System.out.println(mult1);
+        System.out.println(mult2);
+        int cnt = 0;
+        for (Map.Entry e: sqr1.entrySet()) {
+            cnt += ((Integer) e.getValue()) * (mult2.get(e.getKey()) == null? 0 : mult2.get(e.getKey()));
+        }
+        for (Map.Entry e: sqr2.entrySet()) {
+            cnt += ((Integer)e.getValue()) * (mult1.get(e.getKey()) == null? 0 : mult1.get(e.getKey()));
+        }
+        return cnt;
+    }
+}

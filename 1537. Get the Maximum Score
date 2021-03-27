@@ -1,0 +1,37 @@
+class Solution {
+    public int maxSum(int[] nums1, int[] nums2) {
+        int n1 = nums1.length, n2 = nums2.length;
+        long total = 0, seg1 = 0, seg2 = 0;
+        int MODULE = (int) Math.pow(10, 9) + 7;
+        int i = 0, j = 0;
+        while(i < n1 && j < n2) {
+            if (nums1[i] < nums2[j]) {
+                seg1 += nums1[i];
+                i++;
+            } else if (nums1[i] > nums2[j]) {
+                seg2 += nums2[j];
+                j++; 
+            } else {
+                total += Math.max(seg1, seg2) + nums1[i];
+                seg1 = 0;
+                seg2 = 0;
+                i++;
+                j++;
+            }
+            System.out.println(seg1 +","+seg2+"," +total);
+        }
+        if (i == n1 && j == n2) {
+            return (int)(total % MODULE);
+        }
+        if (i == n1){
+            for (; j < n2; j++){
+                seg2 += nums2[j];
+            }
+        } else if (j == n2) {
+            for (; i < n1; i++){
+                seg1 += nums1[i];
+            }
+        }
+        return (int) ((total + Math.max(seg1, seg2)) % MODULE);
+    }
+}

@@ -1,0 +1,15 @@
+class Solution {
+    public int maximumScore(int[] nums, int k) {
+        int i = k, j = k, res = 0, n = nums.length;
+        while (i >= 0 || j < n) {
+            while (i >= 0 && nums[i] >= nums[k]) i--;
+            while (j < n && nums[j] >= nums[k]) j++;
+            res = Math.max(res, nums[k] * (j - i - 1));
+            if (i < 0 && j == n) break;
+            else if (i < 0) nums[k] = nums[j];
+            else if (j == n) nums[k] = nums[i];
+            else nums[k] = Math.max(nums[i], nums[j]);
+        }
+        return res;
+    }
+}

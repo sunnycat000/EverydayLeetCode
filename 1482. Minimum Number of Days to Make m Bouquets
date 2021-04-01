@@ -1,0 +1,29 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        if (bloomDay.length < m * k) {return -1;}
+        int low = 1, high = 1000000000, mid = 0;
+        while (low < high) {
+            mid = (high - low) / 2 + low;
+            int continueCnt = 0, bouquetCnt = 0;
+            for (int i = 0; i < bloomDay.length; i++) {
+                if (bloomDay[i] <= mid) {
+                    continueCnt++;
+                } else {
+                    bouquetCnt = bouquetCnt +continueCnt / k;
+                    continueCnt = 0;
+                }
+            }
+            if (continueCnt == bloomDay.length) {
+                bouquetCnt = continueCnt / k;
+            } else if (continueCnt > 0) {
+                bouquetCnt = bouquetCnt +continueCnt / k;
+            }
+            if(bouquetCnt >= m) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return high == 100000000? -1: low;
+    }
+}

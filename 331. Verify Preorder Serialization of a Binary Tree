@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        int capacity = 1;
+        preorder += ",";
+        for (int i = 0; i < preorder.length(); i++){
+            if(preorder.charAt(i) != ',') continue;
+            if(--capacity < 0) return false;
+            if(preorder.charAt(i - 1) != '#') {
+                capacity +=2;
+            }
+        }
+        return capacity == 0;
+    }
+
+}

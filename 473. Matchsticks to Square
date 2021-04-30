@@ -1,0 +1,23 @@
+class Solution {
+    public boolean makesquare(int[] nums) {
+        int n = nums.length;
+        if (n < 4) return false;
+        int sum = 0;
+        for (int x: nums) sum += x;
+        if (sum % 4 != 0) return false;     
+        int[] sides = new int[4];
+        Arrays.sort(nums);
+        return sideCheck(nums, sides, n - 1, sum/4);
+    }
+    
+    private boolean sideCheck(int[] nums, int[] sides, int pos, int target){
+        if(pos <= 0) return sides[0] == target && sides[1] == target && sides[2] == target;
+        for(int i = 0; i < 4; i++){
+            if(sides[i] + nums[pos] > target) continue;
+            sides[i] += nums[pos];
+            if(sideCheck(nums, sides, pos - 1, target)) return true;
+            sides[i] -= nums[pos];
+        }
+        return false;
+    }
+}

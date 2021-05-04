@@ -1,0 +1,65 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+//solution 1
+class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null) return;
+        ListNode slow = head, fast = head;
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        ListNode tmp = slow.next, curr = slow.next, prev = null;
+        slow.next = null;
+
+        while(tmp != null) {
+            tmp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = tmp;
+        }        
+
+        fast = head; 
+        while(prev != null) {
+            tmp = fast.next;
+            fast.next = prev;
+            prev = prev.next;
+            fast.next.next = tmp;
+            fast = tmp;
+        }
+    }
+}
+
+//solution 2
+class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null) return;
+        Deque<ListNode> q = new ArrayDeque();
+        ListNode curr = head;
+        while(curr != null) {
+            q.push(curr);
+            curr = curr.next;        
+        }
+        int cnt = (q.size() - 1) / 2;
+        ListNode tmp = head;
+        curr = head;
+        while (cnt > 0) {
+            tmp = curr.next;
+            ListNode back = q.pop();
+            curr.next = back;
+            back.next = tmp;
+            curr = tmp;
+            cnt--;
+        }
+        q.pop().next = null;
+    }
+}

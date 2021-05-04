@@ -1,0 +1,32 @@
+//solution 1
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n = nums.length;        
+        boolean[] result = new boolean[n];
+        result[0] = true;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (result[j] && j + nums[j] >= i) {
+                    result[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return result[n - 1];
+    }
+}
+
+//solution 2
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n = nums.length;        
+        int leftMostPos = n - 1;
+        for (int i = n - 1; i >=0; i--) {
+            if (i + nums[i] >= leftMostPos) {
+                leftMostPos = i;
+            }
+        }
+        return leftMostPos == 0;
+    }
+}

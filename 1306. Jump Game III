@@ -1,0 +1,35 @@
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+        int n = arr.length;
+        boolean[] visited = new boolean[n];
+        Queue<Integer> q = new LinkedList();
+        q.offer(start);
+        while(!q.isEmpty()){
+            int i = q.poll();
+            if(arr[i] == 0) return true;
+            if(visited[i]) continue;
+            visited[i] = true;
+            if(i + arr[i] < n) {
+                q.offer(i + arr[i]);
+            }
+            if(i - arr[i] >= 0) {
+                q.offer(i - arr[i]);
+            }
+        }    
+        return false;
+    }
+}
+
+//solution 2 DFS
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+        return canReach(arr, start, new HashSet<Integer>());
+    }
+    private boolean canReach(int[] arr, int pos, HashSet<Integer> visited){
+        if(pos>=0 && pos < arr.length && visited.add(pos)) {
+            return arr[pos] == 0 || canReach(arr, pos - arr[pos], visited) || canReach(arr, pos + arr[pos], visited);
+        }
+        return false;
+    }
+
+}

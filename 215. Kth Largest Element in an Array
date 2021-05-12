@@ -1,0 +1,60 @@
+//solution 1
+public int findKthLargest(int[] nums, int k) {
+        final int N = nums.length;
+        Arrays.sort(nums);
+        return nums[N - k];
+}
+
+//solution 2
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue();
+        for (int i : nums) {
+            pq.offer(i);
+            if(pq.size() > k) {
+                pq.poll();
+            }
+        }
+        return pq.poll();
+    }
+}
+//solution 3
+class Solution {
+    public int findKthLargest(int[] nums, int k) {                     shuffle(nums);
+        k = nums.length - k;
+        int low = 0, high = nums.length - 1;
+        while (low < high){
+            int index = partition(nums, low, high);
+            if (index < k) {
+                low = index + 1;
+            } else if (index > k){
+                high = index - 1;
+            } else {
+                break;
+            }
+        }
+        return nums[k];
+    }    
+    private int partition(int[] nums, int low, int high) {
+        int i = low, j = high + 1;
+        while(true) {
+            while(i < high && nums[++i] < nums[low]);
+            while(j > low && nums[--j] > nums[low]);
+            if (j <= i) break;
+            swap(nums, i, j);
+        }
+        swap(nums, low, j);
+        return j;
+    }
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[j];
+        nums[j] = nums[i];
+        nums[i] = tmp;        
+    }
+    private void shuffle(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            int rand = (int) ((i+ 1) * Math.random());
+            swap(a, i, rand);
+        }
+    }
+}

@@ -1,0 +1,29 @@
+//solution1
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length, lastNoneZeroIndx = 0;
+        if(n <= 1) return;
+        for(int i = 0; i < n; i++){
+            if(nums[i] != 0){
+                nums[lastNoneZeroIndx++] = nums[i];
+            }
+        }        
+        for(int i = lastNoneZeroIndx; i < n; i++){
+            nums[i] = 0;
+        }
+    }
+}
+//solution 2
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length, lastNoneZeroIndx = 0;
+        if(n <= 1) return;
+        for(int i = 0; i < n; i++){
+            if(nums[i] != 0){
+                int tmp = nums[lastNoneZeroIndx];
+                nums[lastNoneZeroIndx++] = nums[i];
+                nums[i] = tmp;
+            }
+        }        
+    }
+}

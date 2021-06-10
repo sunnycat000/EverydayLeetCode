@@ -1,0 +1,15 @@
+publicList<String>solution(int[]nums,intlow,inthigh){
+	List<String>ans=newArrayList<>();
+	for(inti:nums){
+		if(i>low){
+		ans.add(i-low==1?low+"":low+"->"+(i-1));
+	}
+	if(i==high)returnans;
+		low=i+1;
+	}
+	if(low<=high){
+		ans.add(high-low==1?low+"":low+"->"+high);
+	}
+	returnans;
+
+}

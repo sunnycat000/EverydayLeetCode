@@ -1,0 +1,19 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        Map<Character,Integer> map = new HashMap();
+        for(int i = 0; i < s.length(); i++){
+            if(!map.containsKey(s.charAt(i))){
+                map.put(s.charAt(i),i);
+            } else {
+                map.put(s.charAt(i),-1);
+            }
+        }
+        int minIndex= s.length() - 1, maxValue = -1;
+        for(int i: map.values()){
+            minIndex = i == -1? minIndex: Math.min(i, minIndex) ;
+            maxValue = Math.max(i, maxValue);
+        }
+        return maxValue == -1? -1: minIndex;
+    }
+
+}

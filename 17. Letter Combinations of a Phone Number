@@ -1,0 +1,37 @@
+//solution 1
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        LinkedList<String> ans = new LinkedList();
+        if(digits.length() == 0) return ans;
+        ans.add("");
+        while(ans.peek().length() != digits.length()){
+            String remove = ans.remove();
+            for(char c: mapping[digits.charAt(remove.length())-'0'].toCharArray()){
+                ans.add(remove+c);
+            }            
+        }
+        return ans;
+    }
+}
+//solution 2
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        String[] mapping = new String[] {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        LinkedList<String> ans = new LinkedList();
+        if(digits.length()==0) return ans;
+        helper(digits, mapping, 0, "", ans);
+        return ans;
+    }
+    
+    public void helper(String digits, String[] mapping, int level, String output, LinkedList<String> ans){
+        if(level == digits.length()) {
+             ans.add(output);
+            return;
+        }
+        String str = mapping[digits.charAt(level) - '0'];
+        for(char c: str.toCharArray()){
+            helper(digits, mapping, level + 1, output + c, ans);
+        }
+    }
+}
